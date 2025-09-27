@@ -1,0 +1,1 @@
+﻿27.09.2025 Add ObjectFactoryProducer to create new instance for objects.
