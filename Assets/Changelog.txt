@@ -1,1 +1,2 @@
-﻿27.09.2025 Add ObjectFactoryProducer to create new instance for objects.
+﻿27.09.2025      Add ObjectFactoryProducer to create new instance for objects.
+27.09.2025      Realize service which calculate negative value in list.
