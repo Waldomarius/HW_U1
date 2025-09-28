@@ -1,2 +1,3 @@
 ﻿27.09.2025      Add ObjectFactoryProducer to create new instance for objects.
-27.09.2025      Realize service which calculate negative value in list.
+27.09.2025      HW_1: Realize service which calculate positive value in list.
+28.09.2025      HW_1: Realize sorting used method "Sort Shell".

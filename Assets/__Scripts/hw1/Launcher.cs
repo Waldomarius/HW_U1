@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using __Scripts.data;
+﻿using __Scripts.data;
 using __Scripts.factory;
 using __Scripts.Utils;
+using __Scripts.Utils.sorts;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -11,25 +9,36 @@ namespace __Scripts.hw1
 {
     public class Launcher : MonoBehaviour
     {
-        private NegativeValueCounter _negativeValueCounter;
+        private PositiveValueCounter _positiveValueCounter;
+
+        private ShellSort _shellSortSort; 
         
-        private void Awake()
+        private void Start()
         {
             CreateObjects();
-            CalculateNegativeValueFromList();
+            CalculatePsitiveValueFromList();
+            SortList();
         }
 
         private void CreateObjects()
         {
-            var factoryProducer = ObjectFactoryProducer.Create();
+            var factory = ObjectFactoryProducer.Create();
 
-            _negativeValueCounter = factoryProducer.GetInstance<NegativeValueCounter>();
+            _positiveValueCounter = factory.GetInstance<PositiveValueCounter>();
+            _shellSortSort = factory.GetInstance<ShellSort>();
         }
-        private void CalculateNegativeValueFromList()
+        private void CalculatePsitiveValueFromList()
         {
             var listData = Data.GenerateIntValueList(-50, 50, 100);
-            var count = _negativeValueCounter.Calculate(listData);
-            Debug.Log($"This list contains {count} negative elements.");
+            var count = _positiveValueCounter.Calculate(listData);
+            Debug.Log($"This list contains {count} positive elements.");
+        }
+        
+        private void SortList()
+        {
+            var listData = Data.GenerateIntValueList(-50, 50, 50);
+            _shellSortSort.Sort(listData);
+            Debug.Log($"Sorted {listData.Count} elements.");
         }
     }
 }

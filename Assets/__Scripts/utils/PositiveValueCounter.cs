@@ -2,7 +2,7 @@
 
 namespace __Scripts.Utils
 {
-    public class NegativeValueCounter
+    public class PositiveValueCounter
     {
         public int Calculate(List<int> numbers)
         {
@@ -10,9 +10,7 @@ namespace __Scripts.Utils
             
             foreach (var number in numbers)
             {
-                // Debug.Log($"number:  {number}.");
-                
-                if (number < 0)
+                if (number > 0)
                 {
                     result++;
                 }
