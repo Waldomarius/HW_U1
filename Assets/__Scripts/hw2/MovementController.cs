@@ -8,27 +8,30 @@ namespace __Scripts.hw2
         [SerializeField] private float _speed = 5f;
         [SerializeField] private float _jumpForce = 5f;
         private Vector2 _movement;
-
-        [Header("Ground")]
-        [SerializeField] private Transform _groundCheck; 
-        [SerializeField] private float _groundCheckRadius = 0.2f;
-        [SerializeField] private LayerMask _groundLayer;
-        
-        [Header("Player")]
-        [SerializeField] private GameObject _player;
-        
+        private GroundChecker _groundChecker;
         
         private Rigidbody2D _rigidbody;
         private SpriteRenderer _sprite;
         
         private bool _isGrounded; 
-        private bool _isFacingRight = true; 
-        
-        private void Start()
+        private bool _isFacingRight = true;
+
+        private void OnEnable()
+        {
+            // Подписка на слушателя
+            _groundChecker.OnGroundStateChange += HandleGroundStateChanged;
+        }
+
+        private void HandleGroundStateChanged(bool grounded)
+        {
+            _isGrounded = grounded;
+        }
+
+        private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            _sprite  = _player.GetComponent<SpriteRenderer>();
-
+            _sprite  = GetComponentInChildren<SpriteRenderer>();
+            _groundChecker = GetComponentInChildren<GroundChecker>();
         }
 
         private void Update()
@@ -36,7 +39,6 @@ namespace __Scripts.hw2
             _movement.x = Input.GetAxis("Horizontal");
             _rigidbody.velocity = new Vector2(_movement.x * _speed, _rigidbody.velocity.y);
             
-            _isGrounded = Physics2D.OverlapCircle(_groundCheck.position, _groundCheckRadius, _groundLayer);
             if (Input.GetButtonDown("Jump") && _isGrounded)
             {
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
@@ -52,6 +54,12 @@ namespace __Scripts.hw2
         {
             _sprite.flipX = _isFacingRight;
             _isFacingRight = !_isFacingRight;
+        }
+
+        private void OnDisable()
+        {
+            // Отписка от слушателя
+            _groundChecker.OnGroundStateChange -= HandleGroundStateChanged;
         }
     }
 }
